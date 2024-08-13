@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Utility.FileSystem" Version="*" />
+		<PackageReference Include="Utility.FileSystem.Fakes" Version="*" />
+		<PackageReference Include="Utility.TestHelpers" Version="*" />
+		<PackageReference Include="Utility.Result" Version="*" />
+		<PackageReference Include="coverlet.collector" Version="*" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.*" />
+		<PackageReference Include="NUnit" Version="3.*" />
+		<PackageReference Include="NUnit.Analyzers" Version="3.*" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Pilgrimage\Pilgimage.csproj" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="scene2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
