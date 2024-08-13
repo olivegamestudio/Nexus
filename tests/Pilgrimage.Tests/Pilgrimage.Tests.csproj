@@ -7,12 +7,13 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Musts" Version="*" />
 		<PackageReference Include="Utility.FileSystem" Version="*" />
 		<PackageReference Include="Utility.FileSystem.Fakes" Version="*" />
 		<PackageReference Include="Utility.TestHelpers" Version="*" />
 		<PackageReference Include="Utility.Result" Version="*" />
 		<PackageReference Include="coverlet.collector" Version="*" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.*" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
 		<PackageReference Include="NUnit" Version="3.*" />
 		<PackageReference Include="NUnit.Analyzers" Version="3.*" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.*" />
