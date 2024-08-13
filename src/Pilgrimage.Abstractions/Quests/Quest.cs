@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LocalisedString;
 
 namespace Pilgrimage;
 
@@ -14,9 +15,9 @@ public class Quest
 
     public List<QuestRequiredItem> RequiredItems { get; set; } = new();
 
-    public QuestText Title { get; set; } = new();
+    public LocaleString Title { get; set; } = new();
 
-    public QuestText Description { get; set; } = new();
+    public LocaleString Description { get; set; } = new();
 
     public bool AutoShow { get; set; }
 
