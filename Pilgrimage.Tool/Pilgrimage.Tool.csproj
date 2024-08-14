@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pilgrimage.Controls.WPF\Pilgrimage.Controls.WPF.csproj" />
+    <ProjectReference Include="..\Pilgrimage.ViewModels\Pilgrimage.ViewModels.csproj" />
+    <ProjectReference Include="..\src\Pilgrimage\Pilgimage.csproj" />
+  </ItemGroup>
+
+</Project>

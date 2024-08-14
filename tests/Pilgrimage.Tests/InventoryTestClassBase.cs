@@ -2,18 +2,15 @@ namespace Pilgrimage.Tests;
 
 public abstract class InventoryTestClassBase
 {
-    protected Player _player = new();
-
-    protected Task CreatePlayer()
+    protected Task<Player> CreatePlayer()
     {
-        _player = new();
-        return Task.CompletedTask;
+        return Task.FromResult(new Player());
     }
 
-    protected Task AddBag(int maxSlots)
+    protected Task<Bag> AddBag(Player player, int maxSlots)
     {
         Bag bag = new() { MaxSlots = maxSlots };
-        _player.Inventory.Add(bag);
-        return Task.CompletedTask;
+        player.Inventory.Add(bag);
+        return Task.FromResult(bag);
     }
 }

@@ -6,11 +6,11 @@ public class FakeInventorySerializer : IInventorySerializer
 {
     public Task<Result<Player>> Deserialize()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Result.Ok(new Player()));
     }
 
     Task<Result> IInventorySerializer.Serialize(Player player)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(Result.Ok());
     }
 }

@@ -1,3 +1,6 @@
+using Musts;
+using Utility;
+
 namespace Pilgrimage.Tests;
 
 public class InventoryServiceTests : InventoryTestClassBase
@@ -6,72 +9,72 @@ public class InventoryServiceTests : InventoryTestClassBase
     [Parallelizable(ParallelScope.None)]
     public async Task Can_Collect_Item_Into_Inventory()
     {
-        await CreatePlayer();
-        Item itemToCollect = new() { Id = 1 };
+        Player player = await CreatePlayer();
+        Item rock = new Rock();
 
-        IInventoryService service = new InventoryService(new FakeInventorySerializer());
-        await AddBag(1);
+        InventoryService inventory = new(new FakeInventorySerializer());
+        Bag bag = await AddBag(player, 1);
 
-        var result = await service.Collect(_player, itemToCollect, 1);
-        var hasItem = await service.HasItem(_player, itemToCollect.Id, 1);
+        Result result = await inventory.Collect(player, rock, 1);
+        bool hasItem = await inventory.HasItem(player, rock.Id, 1);
 
-        Assert.IsTrue(result.Success);
-        Assert.IsTrue(hasItem);
+        result.Success.MustBeTrue();
+        hasItem.MustBeTrue();
     }
 
     [Test]
     [Parallelizable(ParallelScope.None)]
     public async Task Can_Collect_TwoDifferentItem2_Into_Inventory()
     {
-        await CreatePlayer();
-        Item itemToCollect = new() { Id = 1 };
-        Item secondItemToCollect = new() { Id = 2 };
+        Player player = await CreatePlayer();
+        Item rock = new Rock();
+        Item asteroid = new Asteroid();
 
-        IInventoryService service = new InventoryService(new FakeInventorySerializer());
-        await AddBag(2);
+        InventoryService inventory = new(new FakeInventorySerializer());
+        Bag bag = await AddBag(player, 2);
 
-        var result = await service.Collect(_player, itemToCollect, 1);
-        var result2 = await service.Collect(_player, secondItemToCollect, 2);
-        var hasItem = await service.HasItem(_player, itemToCollect.Id, 1);
-        var hasSecondItem = await service.HasItem(_player, secondItemToCollect.Id, 2);
+        Result result = await inventory.Collect(player, rock, 1);
+        Result result2 = await inventory.Collect(player, asteroid, 2);
+        bool hasItem = await inventory.HasItem(player, rock.Id, 1);
+        bool hasSecondItem = await inventory.HasItem(player, asteroid.Id, 2);
 
-        Assert.IsTrue(result.Success);
-        Assert.IsTrue(result2.Success);
-        Assert.IsTrue(hasItem);
-        Assert.IsTrue(hasSecondItem);
+        result.Success.MustBeTrue();
+        result2.Success.MustBeTrue();
+        hasItem.MustBeTrue();
+        hasSecondItem.MustBeTrue();
     }
 
     [Test]
     [Parallelizable(ParallelScope.None)]
     public async Task Can_CombineCollect_Item_Into_Inventory()
     {
-        await CreatePlayer();
+        Player player = await CreatePlayer();
         Item itemToCollect = new() { Id = 1 };
 
-        IInventoryService service = new InventoryService(new FakeInventorySerializer());
-        await AddBag(1);
+        IInventoryService inventory = new InventoryService(new FakeInventorySerializer());
+        Bag bag = await AddBag(player, 1);
 
-        var result = await service.Collect(_player, itemToCollect, 1);
-        var result2 = await service.Collect(_player, itemToCollect, 2);
-        var hasItem = await service.HasItem(_player, itemToCollect.Id, 3);
+        Result result = await inventory.Collect(player, itemToCollect, 1);
+        Result result2 = await inventory.Collect(player, itemToCollect, 2);
+        bool hasItem = await inventory.HasItem(player, itemToCollect.Id, 3);
 
-        Assert.IsTrue(result.Success);
-        Assert.IsTrue(hasItem);
+        result.Success.MustBeTrue();
+        hasItem.MustBeTrue();
     }
 
     [Test]
     [Parallelizable(ParallelScope.None)]
     public async Task Cannot_Collect_Item_Into_Inventory_NoSlots()
     {
-        await CreatePlayer();
-        Item itemToCollect = new() { Id = 1 };
+        Player player = await CreatePlayer();
+        Item rock = new Rock();
 
-        IInventoryService service = new InventoryService(new FakeInventorySerializer());
+        InventoryService inventory = new(new FakeInventorySerializer());
 
-        var result = await service.Collect(_player, itemToCollect, 1);
-        var hasItem = await service.HasItem(_player, itemToCollect.Id, 1);
+        Result result = await inventory.Collect(player, rock, 1);
+        bool hasItem = await inventory.HasItem(player, rock.Id, 1);
 
-        Assert.IsTrue(result.IsFailure);
-        Assert.IsFalse(hasItem);
+        result.Success.MustBeFalse();
+        hasItem.MustBeFalse();
     }
 }

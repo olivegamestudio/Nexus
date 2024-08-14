@@ -12,5 +12,9 @@ public interface IItemService
     
     bool HasLoaded { get; set; }
 
-    event EventHandler ItemsLoaded;
+    /// <summary>Add item to service.</summary>
+    void AddItem(Item item);
+
+    /// <summary>The items have changed.</summary>
+    event EventHandler ItemsChanged;
 }

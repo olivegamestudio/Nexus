@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net462;net8.0-windows</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="LocalisedString.Controls.WPF" Version="*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Pilgrimage.ViewModels\Pilgrimage.ViewModels.csproj" />
+	</ItemGroup>
+
+</Project>
