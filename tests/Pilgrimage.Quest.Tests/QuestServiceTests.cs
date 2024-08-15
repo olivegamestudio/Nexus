@@ -63,7 +63,7 @@ public class QuestServiceTests
         IItemService items = new ItemService(new FileSystemFake());
         IQuestService quests = new QuestService(new FileSystemFake());
 
-        items.AddItem(new Item { Id = 1 });
+        items.AddItem(new Item { Id = 2 });
 
         Quest quest = new() { Id = 1 };
         quest.RewardItems.Add(new QuestRewardItem { Id = 2, Count = 1 });
