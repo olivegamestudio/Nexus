@@ -53,5 +53,5 @@ public interface IQuestService
 
     Task<Result> StartQuest(Player player, int id);
 
-    Task<Result> CompleteQuest(Player player, int id);
+    Task<Result> CompleteQuest(Player player, IItemService items, IInventoryService inventory, int id);
 }

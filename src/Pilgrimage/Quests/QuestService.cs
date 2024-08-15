@@ -149,11 +149,11 @@ public class QuestService : IQuestService
         return Task.FromResult(Result.Ok());
     }
 
-    public Task<Result> CompleteQuest(Player player, int id)
+    public async Task<Result> CompleteQuest(Player player, IItemService items, IInventoryService inventory, int id)
     {
         while (!HasLoaded)
         {
-            Task.Yield();
+            await Task.Yield();
         }
 
         Quest quest = _quests.FirstOrDefault(it => it.Id == id);
@@ -163,7 +163,7 @@ public class QuestService : IQuestService
             if(state is null)
             {
                 _logger?.LogWarning($"The quest {id} has not been started.");
-                return Task.FromResult(Result.Fail($"The quest {id} has not been started."));
+                return Result.Fail($"The quest {id} has not been started.");
             }
 
             state.State = QuestState.Completed;
@@ -171,6 +171,12 @@ public class QuestService : IQuestService
             state.NumTimesCompleted++;
 
             player.RemoveCollectedItems(quest);
+
+            foreach (QuestRewardItem rewardItem in quest.RewardItems)
+            {
+                Result<Item> itemResult = await items.GetItem(rewardItem.Id);
+                Result collectResult = await inventory.Collect(player, itemResult.Value, rewardItem.Count);
+            }
 
             QuestStateChanged.Invoke(this,
                 new QuestStateChangedEventArgs
@@ -180,11 +186,11 @@ public class QuestService : IQuestService
                 });
 
             _logger?.LogInformation($"The quest {id} has completed.");
-            return Task.FromResult(Result.Ok());
+            return Result.Ok();
         }
 
         _logger?.LogWarning($"The quest {id} cannot be completed as it doesn't exist.");
-        return Task.FromResult(Result.Fail($"The quest {id} cannot be completed as it doesn't exist."));
+        return Result.Fail($"The quest {id} cannot be completed as it doesn't exist.");
     }
 
     public Task<Result> CanStartQuest(Player player, int id)

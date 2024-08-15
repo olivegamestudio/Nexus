@@ -88,9 +88,9 @@ public class InventoryService : IInventoryService
         return Result.Ok();
     }
 
-    public Task<bool> HasItem(Player player, int itemId, int count)
+    public Task<bool> HasItem(Player player, int itemId, int requiredNumber)
     {
-        int total = 0;
+        int totalItems = 0;
 
         foreach (Bag bag in player.Inventory)
         {
@@ -100,13 +100,13 @@ public class InventoryService : IInventoryService
                 {
                     if (item.Id == itemId)
                     {
-                        total += item.Count;
+                        totalItems += item.Count;
                     }
                 }
             }
         }
 
-        return Task.FromResult(total >= count);
+        return Task.FromResult(requiredNumber <= totalItems);
     }
 
     public async Task<Result<Player>> LoadInventory()

@@ -10,7 +10,7 @@ public interface IInventoryService
 
     Task<Result> Collect(Player player, Item item, int count);
 
-    Task<bool> HasItem(Player player, int itemId, int count);
+    Task<bool> HasItem(Player player, int itemId, int requiredNumber);
 
     Task<Result<Player>> LoadInventory();
 }
