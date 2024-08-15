@@ -11,6 +11,8 @@ public interface IQuestService
 
     Task<Result> LoadQuest(string filename);
 
+    Task<Result> AddQuest(Quest quest);
+
     bool HasLoaded { get; }
 
     /// <summary>Raised when a quest's state has changed. e.g. quest has completed</summary>
@@ -51,5 +53,5 @@ public interface IQuestService
 
     Task<Result> StartQuest(Player player, int id);
 
-    Task<Result> CompleteQuest(Player player, int id);
+    Task<Result> CompleteQuest(Player player, IItemService items, IInventoryService inventory, int id);
 }

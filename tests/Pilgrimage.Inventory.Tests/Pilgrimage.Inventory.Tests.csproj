@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Musts" Version="*" />
+		<PackageReference Include="Musts.Result" Version="*" />
 		<PackageReference Include="Utility.FileSystem" Version="*" />
 		<PackageReference Include="Utility.FileSystem.Fakes" Version="*" />
 		<PackageReference Include="Utility.TestHelpers" Version="*" />
@@ -25,15 +26,6 @@
 
   <ItemGroup>
     <Using Include="NUnit.Framework" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="scene2.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

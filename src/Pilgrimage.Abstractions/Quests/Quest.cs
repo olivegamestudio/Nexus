@@ -15,6 +15,8 @@ public class Quest
 
     public List<QuestRequiredItem> RequiredItems { get; set; } = new();
 
+    public List<QuestRewardItem> RewardItems { get; set; } = new ();
+
     public LocaleString Title { get; set; } = new();
 
     public LocaleString Description { get; set; } = new();

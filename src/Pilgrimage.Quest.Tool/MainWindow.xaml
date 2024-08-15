@@ -1,0 +1,28 @@
+﻿<Window x:Class="Pilgrimage.Tool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pilgrimage.Tool"
+        xmlns:wpf="clr-namespace:Pilgrimage.Controls.WPF;assembly=Pilgrimage.Controls.WPF"
+        mc:Ignorable="d"
+        Title="Pilgrimage" Height="650" Width="800">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem x:Name="FileOpen" Header="_Open..." Click="FileOpen_OnClick"/>
+            </MenuItem>
+        </Menu>
+        <TabControl DockPanel.Dock="Left" Width="200">
+            <TabItem Header="Quests">
+                <wpf:QuestListControl DataContext="{Binding}" />
+            </TabItem>
+        </TabControl>
+        <TabControl DockPanel.Dock="Bottom" Height="200">
+            <TabItem Header="Properties">
+                <wpf:QuestPropertiesControl DataContext="{Binding SelectedQuest}"/>
+            </TabItem>
+        </TabControl>
+        <wpf:QuestsCanvas Quests="{Binding Quests}"/>
+    </DockPanel>
+</Window>
