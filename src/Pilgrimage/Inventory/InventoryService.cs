@@ -7,13 +7,13 @@ namespace Pilgrimage;
 
 public class InventoryService : IInventoryService
 {
-    readonly IInventorySerializer _serializer;
+    readonly IInventorySerializer? _serializer;
 
-    public InventoryService(IInventorySerializer serializer)
+    public InventoryService(IInventorySerializer serializer = null)
     {
         _serializer = serializer;
     }
-
+    
     /// <summary>
     /// This function first looks for an existing slot with related items and combines.
     /// If there are no related items, then it finds a slot that can be used.
