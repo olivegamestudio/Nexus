@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +22,8 @@ jobs:
 
       - name: Get tags
         run: git fetch --tags origin
+
+
   
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -39,6 +41,6 @@ jobs:
 
       - name: Publish Nuget
         run: |
-          dotnet nuget push '**/*.nupkg' -api-key ${NUGET} -source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+          dotnet nuget push '**/*.nupkg' --api-key ${NUGET} --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
         env:
           NUGET: ${{ secrets.NUGET }}
