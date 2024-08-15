@@ -13,9 +13,9 @@ public class QuestService : IQuestService
 {
     readonly IFileSystem _fileSystem;
     readonly List<Quest> _quests = new();
-    readonly ILogger<QuestService> _logger;
+    readonly ILogger<QuestService>? _logger;
 
-    public QuestService(IFileSystem fileSystem, ILogger<QuestService> logger)
+    public QuestService(IFileSystem fileSystem, ILogger<QuestService> logger = null)
     {
         _fileSystem = fileSystem;
         _logger = logger;
@@ -162,7 +162,7 @@ public class QuestService : IQuestService
             PlayerQuestState state = player.Quests.FirstOrDefault(it => it.Id == id);
             if(state is null)
             {
-                _logger.LogWarning($"The quest {id} has not been started.");
+                _logger?.LogWarning($"The quest {id} has not been started.");
                 return Task.FromResult(Result.Fail($"The quest {id} has not been started."));
             }
 
@@ -179,11 +179,11 @@ public class QuestService : IQuestService
                     QuestState = state.State
                 });
 
-            _logger.LogInformation($"The quest {id} has completed.");
+            _logger?.LogInformation($"The quest {id} has completed.");
             return Task.FromResult(Result.Ok());
         }
 
-        _logger.LogWarning($"The quest {id} cannot be completed as it doesn't exist.");
+        _logger?.LogWarning($"The quest {id} cannot be completed as it doesn't exist.");
         return Task.FromResult(Result.Fail($"The quest {id} cannot be completed as it doesn't exist."));
     }
 
@@ -235,7 +235,7 @@ public class QuestService : IQuestService
         {
             if (player.Quests.Any(it => it.Id == id))
             {
-                _logger.LogWarning($"The quest {id} has already been started.");
+                _logger?.LogWarning($"The quest {id} has already been started.");
                 return Task.FromResult(Result.Fail($"The quest {id} has already been started."));
             }
 
@@ -248,11 +248,11 @@ public class QuestService : IQuestService
                         QuestState = state.State
                     });
 
-            _logger.LogInformation($"The quest {id} has started.");
+            _logger?.LogInformation($"The quest {id} has started.");
             return Task.FromResult(Result.Ok());
         }
 
-        _logger.LogWarning($"The quest {id} cannot be started as it doesn't exist.");
+        _logger?.LogWarning($"The quest {id} cannot be started as it doesn't exist.");
         return Task.FromResult(Result.Fail($"The quest {id} cannot be started as it doesn't exist."));
     }
 
@@ -272,6 +272,13 @@ public class QuestService : IQuestService
         HasLoaded = true;
         QuestsLoaded.Invoke(this, EventArgs.Empty);
         return Result.Ok();
+    }
+
+    public Task<Result> AddQuest(Quest quest)
+    {
+        _quests.Add(quest);
+        HasLoaded = true;
+        return Task.FromResult(Result.Ok());
     }
 
     /// <inheritdoc />

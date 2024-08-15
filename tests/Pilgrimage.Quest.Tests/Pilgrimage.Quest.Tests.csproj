@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Musts" Version="*" />
+		<PackageReference Include="Musts.Result" Version="*" />
 		<PackageReference Include="Utility.FileSystem" Version="*" />
 		<PackageReference Include="Utility.FileSystem.Fakes" Version="*" />
 		<PackageReference Include="Utility.TestHelpers" Version="*" />
@@ -20,6 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Pilgrimage.Abstractions\Pilgrimage.Abstractions.csproj" />
 	  <ProjectReference Include="..\..\src\Pilgrimage\Pilgimage.csproj" />
 	</ItemGroup>
 
