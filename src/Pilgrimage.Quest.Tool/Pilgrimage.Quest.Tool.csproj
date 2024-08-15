@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Pilgrimage.Controls.WPF\Pilgrimage.Controls.WPF.csproj" />
     <ProjectReference Include="..\Pilgrimage.ViewModels\Pilgrimage.ViewModels.csproj" />
-    <ProjectReference Include="..\src\Pilgrimage\Pilgimage.csproj" />
+    <ProjectReference Include="..\Pilgrimage\Pilgimage.csproj" />
   </ItemGroup>
 
 </Project>

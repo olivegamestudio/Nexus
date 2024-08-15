@@ -1,4 +1,4 @@
-namespace Pilgrimage.Tests;
+namespace Pilgrimage.Inventory.Tests;
 
 class Rock : Item
 {

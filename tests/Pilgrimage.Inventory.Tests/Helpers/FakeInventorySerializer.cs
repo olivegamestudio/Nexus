@@ -1,6 +1,6 @@
 using Utility;
 
-namespace Pilgrimage.Tests;
+namespace Pilgrimage.Inventory.Tests;
 
 public class FakeInventorySerializer : IInventorySerializer
 {
