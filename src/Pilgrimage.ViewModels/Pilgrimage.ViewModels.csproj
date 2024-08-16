@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net462;net8.0-windows</TargetFrameworks>
+		<TargetFramework>netstandard20</TargetFramework>
 		<RootNamespace>Pilgrimage</RootNamespace>
 		<LangVersion>latest</LangVersion>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
