@@ -12,15 +12,15 @@ namespace Pilgrimage;
 public class ItemService : IItemService
 {
     readonly IFileSystem _fileSystem;
-    readonly ILogger<ItemService> _logger;
+    readonly ILogger<ItemService>? _logger;
     readonly List<Item> _items = new();
 
     public bool HasLoaded { get; set; }
 
     /// <inheritdoc />
-    public event EventHandler ItemsLoaded = delegate { };
+    public event EventHandler ItemsChanged = delegate { };
 
-    public ItemService(IFileSystem fileSystem, ILogger<ItemService> logger)
+    public ItemService(IFileSystem fileSystem, ILogger<ItemService> logger = null)
     {
         _fileSystem = fileSystem;
         _logger = logger;
@@ -37,7 +37,6 @@ public class ItemService : IItemService
         return Task.FromResult(Result.Ok<Item>(item));
     }
 
-
     public async Task<Result> LoadItems()
     {
         for (int n = 1; n < 9; n++)
@@ -48,7 +47,14 @@ public class ItemService : IItemService
         }
 
         HasLoaded = true;
-        ItemsLoaded.Invoke(this, EventArgs.Empty);
+        ItemsChanged.Invoke(this, EventArgs.Empty);
         return Result.Ok();
+    }
+
+    /// <inheritdoc />
+    public void AddItem(Item item)
+    {
+        _items.Add(item);
+        ItemsChanged.Invoke(this, EventArgs.Empty);
     }
 }
