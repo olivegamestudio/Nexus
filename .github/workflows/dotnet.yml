@@ -42,5 +42,6 @@ jobs:
         with:
                   # The API key for the NuGet server. Used when pushing the NuGet packages and symbols.
                   api-key: ${NUGET}
+                  working-directory: ${{ inputs.working_directory }}
         env:
           NUGET: ${{ secrets.NUGET }}          
