@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35201.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pilgrimage.Abstractions", "src\Pilgrimage.Abstractions\Pilgrimage.Abstractions.csproj", "{13117B9D-F6E7-417D-B83D-B9BF930B8420}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pilgimage", "src\Pilgrimage\Pilgimage.csproj", "{6716374C-1D0C-4E9A-92B3-1B8FD00ABB50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pilgrimage", "src\Pilgrimage\Pilgrimage.csproj", "{6716374C-1D0C-4E9A-92B3-1B8FD00ABB50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pilgrimage.Extensions", "src\Pilgrimage.Extensions\Pilgrimage.Extensions.csproj", "{8649BB49-FEAD-405D-AE21-AE7476B670A7}"
 EndProject

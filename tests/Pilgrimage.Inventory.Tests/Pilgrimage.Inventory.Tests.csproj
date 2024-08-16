@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Pilgrimage\Pilgimage.csproj" />
+	  <ProjectReference Include="..\..\src\Pilgrimage\Pilgrimage.csproj" />
 	</ItemGroup>
 
   <ItemGroup>
