@@ -9,8 +9,8 @@
 	<ItemGroup>
 		<PackageReference Include="Musts" Version="*" />
 		<PackageReference Include="Musts.Result" Version="*" />
-		<PackageReference Include="Utility.FileSystem" Version="*" />
-		<PackageReference Include="Utility.FileSystem.Fakes" Version="*" />
+		<PackageReference Include="SparkIO.Abstractions" Version="*" />
+		<PackageReference Include="SparkIO.Fakes" Version="*" />
 		<PackageReference Include="Utility.TestHelpers" Version="*" />
 		<PackageReference Include="Utility.Result" Version="*" />
 		<PackageReference Include="coverlet.collector" Version="*" />
