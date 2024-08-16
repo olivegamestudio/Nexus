@@ -23,8 +23,6 @@ jobs:
       - name: Get tags
         run: git fetch --tags origin
 
-
-  
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -40,7 +38,9 @@ jobs:
         run: dotnet test --configuration Release -p:CollectCoverage=true
 
       - name: Publish Nuget
-        run: |
-          dotnet nuget push '**/*.nupkg' --api-key ${NUGET} --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols
+        uses: edumserrano/nuget-push@v1.2.2
+        with:
+                  # The API key for the NuGet server. Used when pushing the NuGet packages and symbols.
+                  api-key: ${NUGET}
         env:
-          NUGET: ${{ secrets.NUGET }}
+          NUGET: ${{ secrets.NUGET }}          
