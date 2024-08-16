@@ -39,8 +39,7 @@ jobs:
 
       - name: Publish Nuget
         run: |
-            dotnet nuget add source ---api-key ${NUGET} --name nuget "https://api.nuget.org/v3/index.json"
-            dotnet nuget push '**/*.nupkg' --source "nuget" --skip-duplicate --no-symbols
+            dotnet nuget push '**/*.nupkg' -k ${NUGET} -s "https://api.nuget.org/v3/index.json" --skip-duplicate --no-symbols
         env:
             NUGET: ${{ secrets.NUGET }}
       
