@@ -1,6 +1,7 @@
 using Musts;
 using Utility;
 using Pilgrimage;
+using SparkIO;
 
 namespace Pilgrimage.Tests;
 
