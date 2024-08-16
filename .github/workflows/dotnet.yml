@@ -38,10 +38,9 @@ jobs:
         run: dotnet test --configuration Release -p:CollectCoverage=true
 
       - name: Publish Nuget
-        uses: edumserrano/nuget-push@v1.2.2
-        with:
-                  # The API key for the NuGet server. Used when pushing the NuGet packages and symbols.
-                  api-key: ${NUGET}
-                  working-directory: ${{ inputs.working_directory }}
+        run: |
+            dotnet nuget add source ---api-key ${NUGET} --name nuget "https://api.nuget.org/v3/index.json"
+            dotnet nuget push '**/*.nupkg' --source "nuget" --skip-duplicate --no-symbols
         env:
-          NUGET: ${{ secrets.NUGET }}          
+            NUGET: ${{ secrets.NUGET }}
+      
