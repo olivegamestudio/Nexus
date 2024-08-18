@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Utility;
 
@@ -63,9 +64,11 @@ public class InventoryService : IInventoryService
         return Task.FromResult((BagItem?)null);
     }
 
+    /// <inheritdoc />
     public event EventHandler<InventoryChangedEventArgs> InventoryChanged = delegate { };
 
-    public async Task<Result> Collect(Player player, Item item, int count)
+    /// <inheritdoc />
+    public async Task<Result> Collect(PilgrimPlayer player, Item item, int count)
     {
         List<Bag> inventory = player.Inventory.Clone();
 
@@ -88,7 +91,8 @@ public class InventoryService : IInventoryService
         return Result.Ok();
     }
 
-    public Task<bool> HasItem(Player player, int itemId, int requiredNumber)
+    /// <inheritdoc />
+    public Task<bool> HasItem(PilgrimPlayer player, int itemId, int requiredNumber)
     {
         int totalItems = 0;
 
@@ -109,10 +113,28 @@ public class InventoryService : IInventoryService
         return Task.FromResult(requiredNumber <= totalItems);
     }
 
-    public async Task<Result<Player>> LoadInventory()
+    /// <inheritdoc />
+    public async Task<Result<PilgrimPlayer>> LoadInventory(Stream s)
     {
-        Result<Player> player = await _serializer.Deserialize();
+        if (_serializer is null)
+        {
+            return Result.Fail<PilgrimPlayer>("The serializer was not specified.");
+        }
+
+        Result<PilgrimPlayer> player = await _serializer.Deserialize(s);
         InventoryChanged(this, new InventoryChangedEventArgs { IsLoading = true });
         return player;
+    }
+
+    /// <inheritdoc />
+    public async Task<Result> SaveInventory(Stream s, PilgrimPlayer player)
+    {
+        if (_serializer is null)
+        {
+            return Result.Fail<PilgrimPlayer>("The serializer was not specified.");
+        }
+
+        await _serializer.Serialize(s, player);
+        return Result.Ok();
     }
 }

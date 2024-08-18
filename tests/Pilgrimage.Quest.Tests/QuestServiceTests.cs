@@ -51,7 +51,7 @@ public class QuestServiceTests
         quest.RequiredItems.Add(new QuestRequiredItem { Id = 1, Count = 1 });
         await quests.AddQuest(quest);
 
-        Player player = new();
+        PilgrimPlayer player = new();
 
         Result result = await quests.CompleteQuest(player, items, inventory, quest.Id);
         result.MustBeFailure();
@@ -71,7 +71,7 @@ public class QuestServiceTests
         quest.RequiredItems.Add(new QuestRequiredItem { Id = 1, Count = 1 });
         await quests.AddQuest(quest);
 
-        Player player = new();
+        PilgrimPlayer player = new();
         Bag bag = new();
         player.Inventory.Add(bag);
 
@@ -102,7 +102,7 @@ public class QuestServiceTests
         Quest quest = new() { Id = 1 };
         await quests.AddQuest(quest);
 
-        Player player = new();
+        PilgrimPlayer player = new();
 
         Result startResult = await quests.StartQuest(player, quest.Id);
         Result hasStartedResult = await quests.HasStartedQuest(player, quest.Id);
@@ -119,7 +119,7 @@ public class QuestServiceTests
         Quest quest = new() { Id = 1 };
         await quests.AddQuest(quest);
 
-        Player player = new();
+        PilgrimPlayer player = new();
         Result hasStartedResult = await quests.HasStartedQuest(player, quest.Id);
 
         hasStartedResult.MustBeFailure();

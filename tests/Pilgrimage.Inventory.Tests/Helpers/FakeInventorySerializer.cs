@@ -4,12 +4,12 @@ namespace Pilgrimage.Inventory.Tests;
 
 public class FakeInventorySerializer : IInventorySerializer
 {
-    public Task<Result<Player>> Deserialize()
+    public Task<Result<PilgrimPlayer>> Deserialize(Stream s)
     {
-        return Task.FromResult(Result.Ok(new Player()));
+        return Task.FromResult(Result.Ok(new PilgrimPlayer()));
     }
 
-    Task<Result> IInventorySerializer.Serialize(Player player)
+    Task<Result> IInventorySerializer.Serialize(Stream s, PilgrimPlayer player)
     {
         return Task.FromResult(Result.Ok());
     }

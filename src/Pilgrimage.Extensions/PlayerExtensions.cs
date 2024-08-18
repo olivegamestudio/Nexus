@@ -6,7 +6,7 @@ namespace Pilgrimage;
 
 public static class PlayerExtensions
 {
-    public static bool IsQuestInProgress(this Player player, int questId)
+    public static bool IsQuestInProgress(this PilgrimPlayer player, int questId)
     {
         PlayerQuestState state = player.Quests.FirstOrDefault(it => it.Id == questId);
         if (state is null)
@@ -78,10 +78,10 @@ public static class PlayerExtensions
             Items = slot.Items.Clone()
         };
 
-    public static bool CanInteract(this Player player, Quest quest)
+    public static bool CanInteract(this PilgrimPlayer player, Quest quest)
         => player.IsEligibleToStartQuest(quest);
 
-    public static int GetCollectedItemsCount(this Player player, Quest quest)
+    public static int GetCollectedItemsCount(this PilgrimPlayer player, Quest quest)
     {
         int count = 0;
 
@@ -94,7 +94,7 @@ public static class PlayerExtensions
         return count;
     }
 
-    public static bool HasCollectedItems(this Player player, Quest quest)
+    public static bool HasCollectedItems(this PilgrimPlayer player, Quest quest)
     {
         foreach (QuestRequiredItem item in quest.RequiredItems)
         {
@@ -107,7 +107,7 @@ public static class PlayerExtensions
         return true;
     }
 
-    public static void RemoveCollectedItems(this Player player, Quest quest)
+    public static void RemoveCollectedItems(this PilgrimPlayer player, Quest quest)
     {
         foreach (QuestRequiredItem item in quest.RequiredItems)
         {
@@ -115,7 +115,7 @@ public static class PlayerExtensions
         }
     }
 
-    public static bool HasCompletedPreRequistes(this Player player, List<Quest> quests, Quest quest)
+    public static bool HasCompletedPreRequistes(this PilgrimPlayer player, List<Quest> quests, Quest quest)
     {
         foreach (int preReqQuestId in quest.PreReqQuests)
         {
@@ -134,12 +134,12 @@ public static class PlayerExtensions
         return true;
     }
 
-    public static bool IsEligibleToStartQuest(this Player player, Quest quest)
+    public static bool IsEligibleToStartQuest(this PilgrimPlayer player, Quest quest)
         => player.Level > quest.MinLevel && !player.HasStartedQuest(quest);
 
-    public static bool HasStartedQuest(this Player player, Quest quest)
+    public static bool HasStartedQuest(this PilgrimPlayer player, Quest quest)
         => player.Quests.Any(it => it.Id == quest.Id && it.State == QuestState.InProgress);
 
-    public static bool HasCompletedQuest(this Player player, Quest quest)
+    public static bool HasCompletedQuest(this PilgrimPlayer player, Quest quest)
         => player.Quests.Any(it => it.Id == quest.Id && it.State == QuestState.Completed);
 }
