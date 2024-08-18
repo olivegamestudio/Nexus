@@ -9,7 +9,6 @@ public static class ServiceExtensions
     {
         services
             .AddSingleton<IInventoryService, InventoryService>()
-            .AddTransient<IInventoryFileStorage, InventoryLocalUserStorage>()
             .AddTransient<IInventorySerializer, InventorySerializer>()
             .AddSingleton<IQuestService, QuestService>()
             .AddSingleton<IItemService, ItemService>();

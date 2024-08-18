@@ -8,7 +8,7 @@ public class InventoryServiceTests : InventoryTestClassBase
     [Test]
     public async Task Can_Collect_Item_Into_Inventory()
     {
-        Player player = await CreatePlayer();
+        PilgrimPlayer player = await CreatePlayer();
         IInventoryService inventory = await CreateInventory();
 
         Bag newlyCreatedBag = await player.CreateBag(1);
@@ -24,7 +24,7 @@ public class InventoryServiceTests : InventoryTestClassBase
     [Test]
     public async Task Can_Collect_TwoDifferentItem2_Into_Inventory()
     {
-        Player player = await CreatePlayer();
+        PilgrimPlayer player = await CreatePlayer();
         IInventoryService inventory = await CreateInventory();
 
         Item rock = new Rock();
@@ -47,7 +47,7 @@ public class InventoryServiceTests : InventoryTestClassBase
     [Test]
     public async Task Can_CombineCollect_Item_Into_Inventory()
     {
-        Player player = await CreatePlayer();
+        PilgrimPlayer player = await CreatePlayer();
         IInventoryService inventory = await CreateInventory();
 
         Bag newlyCreatedBag = await player.CreateBag(1);
@@ -66,7 +66,7 @@ public class InventoryServiceTests : InventoryTestClassBase
     [Test]
     public async Task Cannot_Collect_Item_Into_Inventory_NoSlots()
     {
-        Player player = await CreatePlayer();
+        PilgrimPlayer player = await CreatePlayer();
         IInventoryService inventory = await CreateInventory();
 
         Item rock = new Rock();

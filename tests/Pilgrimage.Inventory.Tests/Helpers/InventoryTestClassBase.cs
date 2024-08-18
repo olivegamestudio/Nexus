@@ -2,9 +2,9 @@ namespace Pilgrimage.Inventory.Tests;
 
 public abstract class InventoryTestClassBase
 {
-    protected Task<Player> CreatePlayer()
+    protected Task<PilgrimPlayer> CreatePlayer()
     {
-        return Task.FromResult(new Player());
+        return Task.FromResult(new PilgrimPlayer());
     }
 
     protected Task<IInventoryService> CreateInventory()

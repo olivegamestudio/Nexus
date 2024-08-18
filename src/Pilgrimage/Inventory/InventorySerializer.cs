@@ -7,34 +7,17 @@ namespace Pilgrimage;
 
 public class InventorySerializer : IInventorySerializer
 {
-    readonly IInventoryFileStorage _storage;
-
-    public InventorySerializer(IInventoryFileStorage storage)
+    /// <inheritdoc />
+    public Task<Result<PilgrimPlayer>> Deserialize(Stream s)
     {
-        _storage = storage;
+        return Task.FromResult(Result.Ok<PilgrimPlayer>(JsonSerializer.Deserialize<PilgrimPlayer>(s, JsonSerializerOptions.Default)));
     }
 
-    public Task<Result<Player>> Deserialize()
+    /// <inheritdoc />
+    public Task<Result> Serialize(Stream s, PilgrimPlayer player)
     {
-        if (File.Exists(_storage.Path))
-        {
-            using (Stream s = new FileStream(_storage.Path, FileMode.Open))
-            {
-                return Task.FromResult(Result.Ok<Player>(JsonSerializer.Deserialize<Player>(s, JsonSerializerOptions.Default)));
-            }
-        }
-
-        return Task.FromResult(Result.Fail<Player>("Save game not found."));
-    }
-
-    public Task<Result> Serialize(Player player)
-    {
-        using (Stream s = new FileStream(_storage.Path, FileMode.Create))
-        {
-            JsonSerializerOptions options = new JsonSerializerOptions() { WriteIndented = true };
-            JsonSerializer.Serialize(s, player, options);
-        }
-
+        JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
+        JsonSerializer.Serialize(s, player, options);
         return Task.FromResult(Result.Ok());
     }
 }
