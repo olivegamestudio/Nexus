@@ -23,7 +23,7 @@ public class QuestService : IQuestService
     }
 
     /// <inheritdoc />
-    public Result<IEnumerable<Quest>> GetAvailableQuests(Player player)
+    public Result<IEnumerable<Quest>> GetAvailableQuests(PilgrimPlayer player)
     {
         while (!HasLoaded)
         {
@@ -44,7 +44,7 @@ public class QuestService : IQuestService
         return Result.Ok<IEnumerable<Quest>>(quests);
     }
 
-    public Result<IEnumerable<Quest>> GetInProgressQuests(Player player)
+    public Result<IEnumerable<Quest>> GetInProgressQuests(PilgrimPlayer player)
     {
         while (!HasLoaded)
         {
@@ -95,7 +95,7 @@ public class QuestService : IQuestService
         return Task.FromResult(Result.Fail<Quest>("There are no quests that require this item."));
     }
 
-    public Task<Result> IsItemRequiredByActiveQuest(Player player, int itemId)
+    public Task<Result> IsItemRequiredByActiveQuest(PilgrimPlayer player, int itemId)
     {
         foreach (PlayerQuestState questState in player.Quests)
         {
@@ -118,7 +118,7 @@ public class QuestService : IQuestService
         return Task.FromResult(Result.Fail("The item is not required by any in-progress quests."));
     }
 
-    public Task<Result> CanCompleteQuest(Player player, int id)
+    public Task<Result> CanCompleteQuest(PilgrimPlayer player, int id)
     {
         while (!HasLoaded)
         {
@@ -150,7 +150,7 @@ public class QuestService : IQuestService
         return Task.FromResult(Result.Ok());
     }
 
-    public async Task<Result> CompleteQuest(Player player, IItemService items, IInventoryService inventory, int id)
+    public async Task<Result> CompleteQuest(PilgrimPlayer player, IItemService items, IInventoryService inventory, int id)
     {
         while (!HasLoaded)
         {
@@ -194,7 +194,7 @@ public class QuestService : IQuestService
         return Result.Fail($"The quest {id} cannot be completed as it doesn't exist.");
     }
 
-    public Task<Result> CanStartQuest(Player player, int id)
+    public Task<Result> CanStartQuest(PilgrimPlayer player, int id)
     {
         while (!HasLoaded)
         {
@@ -230,7 +230,7 @@ public class QuestService : IQuestService
         return Task.FromResult(Result.Ok());
     }
 
-    public Task<Result> StartQuest(Player player, int id)
+    public Task<Result> StartQuest(PilgrimPlayer player, int id)
     {
         while (!HasLoaded)
         {
@@ -299,7 +299,7 @@ public class QuestService : IQuestService
         return Result.Ok();
     }
 
-    public Task<Result> HasStartedQuest(Player player, int questId)
+    public Task<Result> HasStartedQuest(PilgrimPlayer player, int questId)
     {
         PlayerQuestState state = player.Quests.FirstOrDefault(it => it.Id == questId);
         if(state is null)
@@ -315,7 +315,7 @@ public class QuestService : IQuestService
         return Task.FromResult(Result.Fail("The quest is not in progress."));
     }
 
-    public Task<Result> HasCompletedQuest(Player player, int questId)
+    public Task<Result> HasCompletedQuest(PilgrimPlayer player, int questId)
     {
         PlayerQuestState state = player.Quests.FirstOrDefault(it => it.Id == questId);
         if (state is null)

@@ -2,7 +2,7 @@
 
 namespace Pilgrimage;
 
-public class Player
+public class PilgrimPlayer
 {
     public List<PlayerQuestState> Quests { get; set; } = new();
 

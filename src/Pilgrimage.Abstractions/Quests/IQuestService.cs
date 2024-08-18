@@ -29,9 +29,9 @@ public interface IQuestService
     /// This will not return a quest that has been started.
     /// This will return quests that have completed the pre-reqs, otherwise they will be excluded.
     /// </remarks>
-    Result<IEnumerable<Quest>> GetAvailableQuests(Player player);
+    Result<IEnumerable<Quest>> GetAvailableQuests(PilgrimPlayer player);
 
-    Result<IEnumerable<Quest>> GetInProgressQuests(Player player);
+    Result<IEnumerable<Quest>> GetInProgressQuests(PilgrimPlayer player);
 
     /// <summary>Get the entire list of quests.</summary>
     /// <returns>Returns a list of all the loaded quests.</returns>
@@ -39,19 +39,19 @@ public interface IQuestService
 
     Task<Result<bool>> IsPreRequisite(int questId, int preReqQuestId);
 
-    Task<Result> IsItemRequiredByActiveQuest(Player player, int itemId);
+    Task<Result> IsItemRequiredByActiveQuest(PilgrimPlayer player, int itemId);
 
     Task<Result<Quest>> GetQuestForItem(int itemId);
 
-    Task<Result> HasStartedQuest(Player player, int questId);
+    Task<Result> HasStartedQuest(PilgrimPlayer player, int questId);
 
-    Task<Result> CanStartQuest(Player player, int questId);
+    Task<Result> CanStartQuest(PilgrimPlayer player, int questId);
 
-    Task<Result> CanCompleteQuest(Player player, int questId);
+    Task<Result> CanCompleteQuest(PilgrimPlayer player, int questId);
 
-    Task<Result> HasCompletedQuest(Player player, int questId);
+    Task<Result> HasCompletedQuest(PilgrimPlayer player, int questId);
 
-    Task<Result> StartQuest(Player player, int id);
+    Task<Result> StartQuest(PilgrimPlayer player, int id);
 
-    Task<Result> CompleteQuest(Player player, IItemService items, IInventoryService inventory, int id);
+    Task<Result> CompleteQuest(PilgrimPlayer player, IItemService items, IInventoryService inventory, int id);
 }
