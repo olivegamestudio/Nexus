@@ -1,11 +1,12 @@
 using Musts;
 using Utility;
+using Xunit;
 
 namespace Pilgrimage.Inventory.Tests;
 
 public class InventoryServiceTests : InventoryTestClassBase
 {
-    [Test]
+    [Fact]
     public async Task Can_Collect_Item_Into_Inventory()
     {
         PilgrimPlayer player = await CreatePlayer();
@@ -21,7 +22,7 @@ public class InventoryServiceTests : InventoryTestClassBase
         hasItem.MustBeTrue();
     }
 
-    [Test]
+    [Fact]
     public async Task Can_Collect_TwoDifferentItem2_Into_Inventory()
     {
         PilgrimPlayer player = await CreatePlayer();
@@ -44,7 +45,7 @@ public class InventoryServiceTests : InventoryTestClassBase
         hasAsteroid.MustBeTrue();
     }
 
-    [Test]
+    [Fact]
     public async Task Can_CombineCollect_Item_Into_Inventory()
     {
         PilgrimPlayer player = await CreatePlayer();
@@ -63,7 +64,7 @@ public class InventoryServiceTests : InventoryTestClassBase
         hasThreeItems.MustBeTrue();
     }
 
-    [Test]
+    [Fact]
     public async Task Cannot_Collect_Item_Into_Inventory_NoSlots()
     {
         PilgrimPlayer player = await CreatePlayer();

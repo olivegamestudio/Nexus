@@ -2,12 +2,13 @@ using Musts;
 using Utility;
 using Pilgrimage;
 using SparkIO;
+using Xunit;
 
 namespace Pilgrimage.Tests;
 
 public class QuestServiceTests
 {
-    [Test]
+    [Fact]
     public async Task Quest_IsNotPreRequisiteQuest()
     {
         IQuestService quests = new QuestService(new FileSystemFake());
@@ -23,7 +24,7 @@ public class QuestServiceTests
         result.Value.MustBeFalse();
     }
 
-    [Test]
+    [Fact]
     public async Task Quest_IsPreRequisiteQuest()
     {
         IQuestService quests = new QuestService(new FileSystemFake());
@@ -40,7 +41,7 @@ public class QuestServiceTests
         result.Value.MustBeTrue();
     }
 
-    [Test]
+    [Fact]
     public async Task Player_CompletesUnStartedQuest_Then_Fails()
     {
         IItemService items = new ItemService(new FileSystemFake());
@@ -57,7 +58,7 @@ public class QuestServiceTests
         result.MustBeFailure();
     }
 
-    [Test]
+    [Fact]
     public async Task Player_CompletesStartedQuest_Then_RemovesCollectedItems()
     {
         IInventoryService inventory = new InventoryService();
@@ -94,7 +95,7 @@ public class QuestServiceTests
         hasRewardItem.MustBeTrue();
     }
 
-    [Test]
+    [Fact]
     public async Task Player_StartQuest_Then_HasStartedQuest()
     {
         IQuestService quests = new QuestService(new FileSystemFake());
@@ -111,7 +112,7 @@ public class QuestServiceTests
         hasStartedResult.MustBeSuccess();
     }
 
-    [Test]
+    [Fact]
     public async Task Player_NotStartQuest_Then_HasNotStartedQuest()
     {
         IQuestService quests = new QuestService(new FileSystemFake());

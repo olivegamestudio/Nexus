@@ -15,19 +15,13 @@
 		<PackageReference Include="Utility.Result" Version="*" />
 		<PackageReference Include="coverlet.collector" Version="*" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
-		<PackageReference Include="NUnit" Version="3.*" />
-		<PackageReference Include="NUnit.Analyzers" Version="3.*" />
-		<PackageReference Include="NUnit3TestAdapter" Version="4.*" />
+		<PackageReference Include="XUnit" Version="*" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Pilgrimage.Abstractions\Pilgrimage.Abstractions.csproj" />
 	  <ProjectReference Include="..\..\src\Pilgrimage\Pilgrimage.csproj" />
 	</ItemGroup>
-
-  <ItemGroup>
-    <Using Include="NUnit.Framework" />
-  </ItemGroup>
 
   <ItemGroup>
     <None Update="appsettings.json">
