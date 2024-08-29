@@ -49,6 +49,11 @@ public class Quest
     public LocaleString Description { get; set; } = new();
 
     /// <summary>  
+    /// Gets or sets the localized short description of the quest.  
+    /// </summary>  
+    public LocaleString ShortDescription { get; set; } = new();
+
+    /// <summary>  
     /// Gets or sets a value indicating whether the quest should be automatically shown.  
     /// </summary>  
     public bool AutoShow { get; set; }
