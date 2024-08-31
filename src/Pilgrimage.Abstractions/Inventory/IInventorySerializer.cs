@@ -22,5 +22,5 @@ public interface IInventorySerializer
     /// </summary>
     /// <param name="s">The stream from which the data will be deserialized.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="Result{Player}"/> with the deserialized player data.</returns>
-    Task<Result<PilgrimPlayer>> Deserialize(Stream s);
+    Task<ObjectResult<PilgrimPlayer>> Deserialize(Stream s);
 }

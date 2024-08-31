@@ -8,9 +8,9 @@ namespace Pilgrimage;
 public class InventorySerializer : IInventorySerializer
 {
     /// <inheritdoc />
-    public Task<Result<PilgrimPlayer>> Deserialize(Stream s)
+    public Task<ObjectResult<PilgrimPlayer>> Deserialize(Stream s)
     {
-        return Task.FromResult(Result.Ok<PilgrimPlayer>(JsonSerializer.Deserialize<PilgrimPlayer>(s, JsonSerializerOptions.Default)));
+        return Task.FromResult((ObjectResult<PilgrimPlayer>)OkObjectResult<PilgrimPlayer>.Ok(JsonSerializer.Deserialize<PilgrimPlayer>(s, JsonSerializerOptions.Default)));
     }
 
     /// <inheritdoc />
@@ -18,6 +18,6 @@ public class InventorySerializer : IInventorySerializer
     {
         JsonSerializerOptions options = new JsonSerializerOptions { WriteIndented = true };
         JsonSerializer.Serialize(s, player, options);
-        return Task.FromResult(Result.Ok());
+        return Task.FromResult((Result)OkResult.Ok());
     }
 }

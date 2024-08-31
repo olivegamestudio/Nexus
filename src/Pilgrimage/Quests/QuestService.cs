@@ -23,7 +23,7 @@ public class QuestService : IQuestService
     }
 
     /// <inheritdoc />
-    public Result<IEnumerable<Quest>> GetAvailableQuests(PilgrimPlayer player)
+    public ObjectResult<IEnumerable<Quest>> GetAvailableQuests(PilgrimPlayer player)
     {
         while (!HasLoaded)
         {
@@ -41,10 +41,10 @@ public class QuestService : IQuestService
             }
         }
 
-        return Result.Ok<IEnumerable<Quest>>(quests);
+        return OkObjectResult<IEnumerable<Quest>>.Ok(quests);
     }
 
-    public Result<IEnumerable<Quest>> GetInProgressQuests(PilgrimPlayer player)
+    public ObjectResult<IEnumerable<Quest>> GetInProgressQuests(PilgrimPlayer player)
     {
         while (!HasLoaded)
         {
@@ -62,24 +62,24 @@ public class QuestService : IQuestService
             }
         }
 
-        return Result.Ok<IEnumerable<Quest>>(quests);
+        return OkObjectResult<IEnumerable<Quest>>.Ok(quests);
     }
 
     /// <inheritdoc />
     public IEnumerable<Quest> GetAllQuests() => _quests;
 
-    public Task<Result<bool>> IsPreRequisite(int questId, int preReqQuestId)
+    public Task<ObjectResult<bool>> IsPreRequisite(int questId, int preReqQuestId)
     {
         if (!_quests.Any(it=>it.Id == questId))
         {
-            return Task.FromResult(Result.Fail<bool>("The quest does not exist."));
+            return Task.FromResult((ObjectResult<bool>)ErrorObjectResult<bool>.Fail("The quest does not exist."));
         }
 
         Quest quest = _quests.First(it => it.Id == questId);
-        return Task.FromResult(Result.Ok(quest.PreReqQuests.Contains(preReqQuestId)));
+        return Task.FromResult((ObjectResult<bool>)OkObjectResult<bool>.Ok(quest.PreReqQuests.Contains(preReqQuestId)));
     }
 
-    public Task<Result<Quest>> GetQuestForItem(int itemId)
+    public Task<ObjectResult<Quest>> GetQuestForItem(int itemId)
     {
         foreach (Quest quest in GetAllQuests())
         {
@@ -87,12 +87,12 @@ public class QuestService : IQuestService
             {
                 if (requiredItem.Id == itemId)
                 {
-                    return Task.FromResult(Result.Ok(quest));
+                    return Task.FromResult((ObjectResult<Quest>)OkObjectResult<Quest>.Ok(quest));
                 }
             }
         }
 
-        return Task.FromResult(Result.Fail<Quest>("There are no quests that require this item."));
+        return Task.FromResult((ObjectResult<Quest>)ErrorObjectResult<Quest>.Fail("There are no quests that require this item."));
     }
 
     public Task<Result> IsItemRequiredByActiveQuest(PilgrimPlayer player, int itemId)
@@ -108,14 +108,14 @@ public class QuestService : IQuestService
                     {
                         if (requiredItem.Id == itemId)
                         {
-                            return Task.FromResult(Result.Ok());
+                            return Task.FromResult<Result>(OkResult.Ok());
                         }
                     }
                 }
             }
         }
 
-        return Task.FromResult(Result.Fail("The item is not required by any in-progress quests."));
+        return Task.FromResult<Result>(ErrorResult.Fail("The item is not required by any in-progress quests."));
     }
 
     public Task<Result> CanCompleteQuest(PilgrimPlayer player, int id)
@@ -128,26 +128,26 @@ public class QuestService : IQuestService
         Quest quest = _quests.FirstOrDefault(it => it.Id == id);
         if (quest is null)
         {
-            return Task.FromResult(Result.Fail($"The quest {id} was not found."));
+            return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} was not found."));
         }
 
         PlayerQuestState state = player.Quests.FirstOrDefault(it => it.Id == id);
         if (state is null)
         {
-            return Task.FromResult(Result.Fail($"The quest {id} has not been started."));
+            return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} has not been started."));
         }
 
         if (state.State == QuestState.Completed)
         {
-            return Task.FromResult(Result.Fail($"The quest {id} has been completed and cannot be completed again."));
+            return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} has been completed and cannot be completed again."));
         }
 
         if (!player.HasCollectedItems(quest))
         {
-            return Task.FromResult(Result.Fail("The player has not collected all of the required items to complete the quest."));
+            return Task.FromResult<Result>(ErrorResult.Fail("The player has not collected all of the required items to complete the quest."));
         }
 
-        return Task.FromResult(Result.Ok());
+        return Task.FromResult<Result>(OkResult.Ok());
     }
 
     public async Task<Result> CompleteQuest(PilgrimPlayer player, IItemService items, IInventoryService inventory, int id)
@@ -164,7 +164,7 @@ public class QuestService : IQuestService
             if(state is null)
             {
                 _logger?.LogWarning($"The quest {id} has not been started.");
-                return Result.Fail($"The quest {id} has not been started.");
+                return ErrorResult.Fail($"The quest {id} has not been started.");
             }
 
             state.State = QuestState.Completed;
@@ -175,7 +175,7 @@ public class QuestService : IQuestService
 
             foreach (QuestRewardItem rewardItem in quest.RewardItems)
             {
-                Result<Item> itemResult = await items.GetItem(rewardItem.Id);
+                ObjectResult<Item> itemResult = await items.GetItem(rewardItem.Id);
                 Result collectResult = await inventory.Collect(player, itemResult.Value, rewardItem.Count);
             }
 
@@ -191,7 +191,7 @@ public class QuestService : IQuestService
         }
 
         _logger?.LogWarning($"The quest {id} cannot be completed as it doesn't exist.");
-        return Result.Fail($"The quest {id} cannot be completed as it doesn't exist.");
+        return ErrorResult.Fail($"The quest {id} cannot be completed as it doesn't exist.");
     }
 
     public Task<Result> CanStartQuest(PilgrimPlayer player, int id)
@@ -204,13 +204,13 @@ public class QuestService : IQuestService
         Quest quest = _quests.FirstOrDefault(it => it.Id == id);
         if (quest is null)
         {           
-            return Task.FromResult(Result.Fail($"The quest {id} does not exist."));
+            return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} does not exist."));
         }
 
         PlayerQuestState state = player.Quests.FirstOrDefault(it => it.Id == id);
         if(state is not null)
         {
-            return Task.FromResult(Result.Fail($"The quest {id} is in progress or completed."));
+            return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} is in progress or completed."));
         }
 
         foreach(int preReqQuest in quest.PreReqQuests)
@@ -218,16 +218,16 @@ public class QuestService : IQuestService
             PlayerQuestState preReqState = player.Quests.FirstOrDefault(it => it.Id == preReqQuest);
             if (preReqState is null)
             {
-                return Task.FromResult(Result.Fail($"The quest {id} requires {preReqQuest} to be started and completed first."));
+                return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} requires {preReqQuest} to be started and completed first."));
             }
 
             if(preReqState.State != QuestState.Completed)
             {
-                return Task.FromResult(Result.Fail($"The quest {id} requires {preReqQuest} to be completed first."));
+                return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} requires {preReqQuest} to be completed first."));
             }
         }
 
-        return Task.FromResult(Result.Ok());
+        return Task.FromResult<Result>(OkResult.Ok());
     }
 
     public Task<Result> StartQuest(PilgrimPlayer player, int id)
@@ -243,7 +243,7 @@ public class QuestService : IQuestService
             if (player.Quests.Any(it => it.Id == id))
             {
                 _logger?.LogWarning($"The quest {id} has already been started.");
-                return Task.FromResult(Result.Fail($"The quest {id} has already been started."));
+                return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} has already been started."));
             }
 
             PlayerQuestState state = new PlayerQuestState { Id = id, State = QuestState.InProgress };
@@ -256,11 +256,11 @@ public class QuestService : IQuestService
                     });
 
             _logger?.LogInformation($"The quest {id} has started.");
-            return Task.FromResult(Result.Ok());
+            return Task.FromResult<Result>(OkResult.Ok());
         }
 
         _logger?.LogWarning($"The quest {id} cannot be started as it doesn't exist.");
-        return Task.FromResult(Result.Fail($"The quest {id} cannot be started as it doesn't exist."));
+        return Task.FromResult<Result>(ErrorResult.Fail($"The quest {id} cannot be started as it doesn't exist."));
     }
 
     public bool HasLoaded { get; set; }
@@ -285,7 +285,7 @@ public class QuestService : IQuestService
     {
         _quests.Add(quest);
         HasLoaded = true;
-        return Task.FromResult(Result.Ok());
+        return Task.FromResult<Result>(OkResult.Ok());
     }
 
     /// <inheritdoc />
@@ -304,15 +304,15 @@ public class QuestService : IQuestService
         PlayerQuestState state = player.Quests.FirstOrDefault(it => it.Id == questId);
         if(state is null)
         {
-            return Task.FromResult(Result.Fail("The quest has not been started."));
+            return Task.FromResult<Result>(ErrorResult.Fail("The quest has not been started."));
         }
 
         if (state.State == QuestState.InProgress)
         {
-            return Task.FromResult(Result.Ok());
+            return Task.FromResult<Result>(OkResult.Ok());
         }
 
-        return Task.FromResult(Result.Fail("The quest is not in progress."));
+        return Task.FromResult<Result>(ErrorResult.Fail("The quest is not in progress."));
     }
 
     public Task<Result> HasCompletedQuest(PilgrimPlayer player, int questId)
@@ -320,15 +320,15 @@ public class QuestService : IQuestService
         PlayerQuestState state = player.Quests.FirstOrDefault(it => it.Id == questId);
         if (state is null)
         {
-            return Task.FromResult(Result.Fail("The quest has not been started."));
+            return Task.FromResult<Result>(ErrorResult.Fail("The quest has not been started."));
         }
 
         if (state.State == QuestState.Completed)
         {
-            return Task.FromResult(Result.Ok());
+            return Task.FromResult<Result>(OkResult.Ok());
         }
 
-        return Task.FromResult(Result.Fail("The quest has not been completed."));
+        return Task.FromResult<Result>(ErrorResult.Fail("The quest has not been completed."));
     }
 
     /// <inheritdoc />

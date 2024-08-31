@@ -18,7 +18,7 @@ public class QuestServiceTests
         Quest secondQuest = new() { Id = 2 };
         await quests.AddQuest(secondQuest);
 
-        Result<bool> result = await quests.IsPreRequisite(secondQuest.Id, firstQuest.Id);
+        ObjectResult<bool> result = await quests.IsPreRequisite(secondQuest.Id, firstQuest.Id);
         result.MustBeSuccess();
         result.Value.MustBeFalse();
     }
@@ -35,7 +35,7 @@ public class QuestServiceTests
         secondQuest.PreReqQuests.Add(firstQuest.Id);
         await quests.AddQuest(secondQuest);
 
-        Result<bool> result = await quests.IsPreRequisite(secondQuest.Id, firstQuest.Id);
+        ObjectResult<bool> result = await quests.IsPreRequisite(secondQuest.Id, firstQuest.Id);
         result.MustBeSuccess();
         result.Value.MustBeTrue();
     }

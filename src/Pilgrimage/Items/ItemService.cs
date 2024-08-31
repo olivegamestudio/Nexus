@@ -27,15 +27,15 @@ public class ItemService : IItemService
         _logger = logger;
     }
 
-    public Task<Result<Item>> GetItem(int id)
+    public Task<ObjectResult<Item>> GetItem(int id)
     {
         Item item = _items.FirstOrDefault(it => it.Id == id);
         if (item is null)
         {
-            return Task.FromResult(Result.Fail<Item>("The item was not found."));
+            return Task.FromResult((ObjectResult<Item>)ErrorObjectResult<Item>.Fail("The item was not found."));
         }
 
-        return Task.FromResult(Result.Ok<Item>(item));
+        return Task.FromResult((ObjectResult<Item>)OkObjectResult<Item>.Ok(item));
     }
 
     public async Task<Result> LoadItems()

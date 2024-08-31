@@ -20,7 +20,7 @@ public interface IItemService
     /// </summary>  
     /// <param name="id">The unique identifier of the item.</param>  
     /// <returns>A task that represents the asynchronous operation. The task result contains the item.</returns>  
-    Task<Result<Item>> GetItem(int id);
+    Task<ObjectResult<Item>> GetItem(int id);
 
     /// <summary>  
     /// Gets or sets a value indicating whether items have been loaded.  

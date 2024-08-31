@@ -13,7 +13,7 @@ public class ItemServiceTests
         Rock rock = new();
         items.AddItem(rock);
 
-        Result<Item> result = await items.GetItem(rock.Id);
+        ObjectResult<Item> result = await items.GetItem(rock.Id);
         result.MustBeSuccess();
     }
 
@@ -23,7 +23,7 @@ public class ItemServiceTests
         ItemService items = new(new FileSystemFake());
 
         Rock rock = new();
-        Result<Item> result = await items.GetItem(rock.Id);
+        ObjectResult<Item> result = await items.GetItem(rock.Id);
         result.MustBeFailure();
     }
 }

@@ -61,14 +61,14 @@ public interface IQuestService
     /// This will not return a quest that has been started.  
     /// This will return quests that have completed the pre-reqs; otherwise, they will be excluded.  
     /// </remarks>  
-    Result<IEnumerable<Quest>> GetAvailableQuests(PilgrimPlayer player);
+    ObjectResult<IEnumerable<Quest>> GetAvailableQuests(PilgrimPlayer player);
 
     /// <summary>  
     /// Gets the list of quests that are in progress for the player.  
     /// </summary>  
     /// <param name="player">The player.</param>  
     /// <returns>Returns a list of in-progress quests.</returns>  
-    Result<IEnumerable<Quest>> GetInProgressQuests(PilgrimPlayer player);
+    ObjectResult<IEnumerable<Quest>> GetInProgressQuests(PilgrimPlayer player);
 
     /// <summary>  
     /// Gets the entire list of quests.  
@@ -82,7 +82,7 @@ public interface IQuestService
     /// <param name="questId">The quest ID.</param>  
     /// <param name="preReqQuestId">The prerequisite quest ID.</param>  
     /// <returns>A task that represents the asynchronous operation. The task result contains the result of the check.</returns>  
-    Task<Result<bool>> IsPreRequisite(int questId, int preReqQuestId);
+    Task<ObjectResult<bool>> IsPreRequisite(int questId, int preReqQuestId);
 
     /// <summary>  
     /// Determines whether an item is required by an active quest for the player.  
@@ -97,7 +97,7 @@ public interface IQuestService
     /// </summary>  
     /// <param name="itemId">The item ID.</param>  
     /// <returns>A task that represents the asynchronous operation. The task result contains the quest associated with the item.</returns>  
-    Task<Result<Quest>> GetQuestForItem(int itemId);
+    Task<ObjectResult<Quest>> GetQuestForItem(int itemId);
 
     /// <summary>  
     /// Determines whether the player has started a specific quest.  

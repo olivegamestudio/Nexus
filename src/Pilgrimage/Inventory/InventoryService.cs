@@ -76,7 +76,7 @@ public class InventoryService : IInventoryService
         BagItem? freeSlot = await FindSpace(inventory, item, count);
         if (freeSlot is null)
         {
-            return Result.Fail("No free slot available.");
+            return ErrorResult.Fail("No free slot available.");
         }
 
         // found a suitable slot add item to it
@@ -88,7 +88,7 @@ public class InventoryService : IInventoryService
         player.Inventory = inventory;
 
         InventoryChanged(this, new InventoryChangedEventArgs());
-        return Result.Ok();
+        return OkResult.Ok();
     }
 
     /// <inheritdoc />
@@ -114,14 +114,14 @@ public class InventoryService : IInventoryService
     }
 
     /// <inheritdoc />
-    public async Task<Result<PilgrimPlayer>> LoadInventory(Stream s)
+    public async Task<ObjectResult<PilgrimPlayer>> LoadInventory(Stream s)
     {
         if (_serializer is null)
         {
-            return Result.Fail<PilgrimPlayer>("The serializer was not specified.");
+            return ErrorObjectResult<PilgrimPlayer>.Fail("The serializer was not specified.");
         }
 
-        Result<PilgrimPlayer> player = await _serializer.Deserialize(s);
+        ObjectResult<PilgrimPlayer> player = await _serializer.Deserialize(s);
         InventoryChanged(this, new InventoryChangedEventArgs { IsLoading = true });
         return player;
     }
@@ -131,10 +131,10 @@ public class InventoryService : IInventoryService
     {
         if (_serializer is null)
         {
-            return Result.Fail<PilgrimPlayer>("The serializer was not specified.");
+            return ErrorObjectResult<PilgrimPlayer>.Fail("The serializer was not specified.");
         }
 
         await _serializer.Serialize(s, player);
-        return Result.Ok();
+        return OkResult.Ok();
     }
 }
