@@ -49,7 +49,7 @@ public class ItemService : IItemService
 
         HasLoaded = true;
         ItemsChanged.Invoke(this, EventArgs.Empty);
-        return Result.Ok();
+        return OkResult.Ok();
     }
 
     /// <inheritdoc />

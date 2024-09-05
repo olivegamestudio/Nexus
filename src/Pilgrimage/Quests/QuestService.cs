@@ -187,7 +187,7 @@ public class QuestService : IQuestService
                 });
 
             _logger?.LogInformation($"The quest {id} has completed.");
-            return Result.Ok();
+            return OkResult.Ok();
         }
 
         _logger?.LogWarning($"The quest {id} cannot be completed as it doesn't exist.");
@@ -278,7 +278,7 @@ public class QuestService : IQuestService
 
         HasLoaded = true;
         QuestsLoaded.Invoke(this, EventArgs.Empty);
-        return Result.Ok();
+        return OkResult.Ok();
     }
 
     public Task<Result> AddQuest(Quest quest)
@@ -296,7 +296,7 @@ public class QuestService : IQuestService
         _quests.Add(quest);
         QuestLoaded.Invoke(this, new QuestLoadedEventArgs { QuestId = quest.Id });
 
-        return Result.Ok();
+        return OkResult.Ok();
     }
 
     public Task<Result> HasStartedQuest(PilgrimPlayer player, int questId)
